@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  hello:
-    runs-on: [ self-hosted, linux, "x64", runner]
+  bye:
+    runs-on: [ runner]
     steps:
       - name: Hello World
         run: echo "Bye, World!"
