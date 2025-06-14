@@ -1,0 +1,16 @@
+name: Hello World
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  hello:
+    runs-on: [ self-hosted, linux, "x64", runner]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello World
+        run: echo "Hello, World!"
