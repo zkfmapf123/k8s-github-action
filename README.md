@@ -1,5 +1,14 @@
 # K8S Github Action Runners
 
+## ...
+
+- [x] Github Action use K8S
+- [ ] 요청 시 Action Pod / Node Scale-out
+- [ ] Github Action 병렬처리
+    - [ ] Karpenter 깊게 이해하기
+    - [ ] Github Action 요청이 많을때 자체적으로 Action 이 늘어날순없을까? ( Action : Pod = 1: 1 )
+    - [ ] Action Deployment를 Replica를 늘리면 Karpenter가 자체적으로 늘어나게 할 수 있을까?
+
 ## Environments
 
 - EKS

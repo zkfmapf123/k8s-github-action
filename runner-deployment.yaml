@@ -9,7 +9,7 @@ metadata:
     autoscaling.k8s.io/minReplicas: "1"
     autoscaling.k8s.io/maxReplicas: "10"
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: github-runner
@@ -35,10 +35,10 @@ spec:
           value: "zkfmapf123"
         - name: REPO_URL
           value: "https://github.com/zkfmapf123/k8s-github-action"
-        resources:
-          requests:
-            cpu: "500m"               ## 최소 사용량
-            memory: "1Gi"
-          limits:
-            cpu: "1"                  ## 최대 사용량  
-            memory: "1Gi" 
+        # resources:
+        #   requests:
+        #     cpu: "500m"               ## 최소 사용량
+        #     memory: "1Gi"
+        #   limits:
+        #     cpu: "1"                  ## 최대 사용량  
+        #     memory: "1Gi" 

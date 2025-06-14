@@ -13,8 +13,3 @@ jobs:
     steps:
       - name: Hello World 1
         run: echo "Hello, World! 1"
-      - name: CPU Load Test
-        run: |
-          for i in {1..1000000}; do
-            echo "scale=1000; 4*a(1)" | bc -l
-          done 
