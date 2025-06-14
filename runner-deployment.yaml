@@ -3,6 +3,11 @@ kind: Deployment
 metadata:
   name: github-runner
   namespace: action
+  annotations:
+    autoscaling.k8s.io/targetCPUUtilizationPercentage: "50"
+    autoscaling.k8s.io/targetMemoryUtilizationPercentage: "50"
+    autoscaling.k8s.io/minReplicas: "1"
+    autoscaling.k8s.io/maxReplicas: "10"
 spec:
   replicas: 1
   selector:
