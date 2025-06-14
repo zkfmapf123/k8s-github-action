@@ -9,7 +9,7 @@ on:
 
 jobs:
   hello:
-    runs-on: [runner]
+    runs-on: self-hosted
     steps:
       - name: Hello World
         run: echo "Hello, World!"
