@@ -33,7 +33,7 @@ spec:
         - name: RUNNER_LABELS
           value: "self-hosted,linux,x64"
         - name: RUNNER_NAME
-          value: "leedonggyu-runner"
+          value: "runner"
         - name: RUNNER_TOKEN
           valueFrom:
             secretKeyRef:
