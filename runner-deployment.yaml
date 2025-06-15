@@ -41,7 +41,7 @@ spec:
         - name: RUNNER_LABELS
           value: "self-hosted,linux,x64"
         - name: RUNNER_NAME
-          value: "runner-${RANDOM}"
+          value: "leedonggyu-runner"
         - name: RUNNER_TOKEN
           valueFrom:
             secretKeyRef:
