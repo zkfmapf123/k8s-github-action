@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: github-runner
-        Service: action
+        type: karpenter
     spec:
       nodeSelector:
         type: karpenter
@@ -24,9 +24,6 @@ spec:
               - key: type
                 operator: In
                 values: ["karpenter"]
-              - key: Service
-                operator: In
-                values: ["action"]
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
