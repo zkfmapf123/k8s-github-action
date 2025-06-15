@@ -4,7 +4,7 @@ metadata:
   name: github-runner
   namespace: action
 spec:
-  replicas: 2  # Karpenter 사용 시 최소로 시작하고 오토스케일 사용 권장
+  replicas: 1  # 초기 Pod 수를 1로 설정
   selector:
     matchLabels:
       app: github-runner
@@ -12,37 +12,41 @@ spec:
     metadata:
       labels:
         app: github-runner
-        Service: action  # 중요: Provisioner의 requirements와 일치
+        Service: action
     spec:
       affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: Service
+                operator: In
+                values:
+                - action
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - github-runner
-              topologyKey: "kubernetes.io/hostname"
+          - topologyKey: kubernetes.io/hostname
       containers:
-        - name: runner
-          image: myoung34/github-runner:latest
-          env:
-            - name: RUNNER_NAME
-              value: "runner"
-            - name: RUNNER_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: github-runner-secret
-                  key: token
-            - name: RUNNER_ORG
-              value: "zkfmapf123"
-            - name: REPO_URL
-              value: "https://github.com/zkfmapf123/k8s-github-action"
-          resources:
-            requests:
-              cpu: "500m"
-              memory: "512Mi"
-            limits:
-              cpu: "1"
-              memory: "1Gi"
+      - name: runner
+        image: myoung34/github-runner:latest
+        env:
+        - name: RUNNER_LABELS
+          value: "self-hosted,linux,x64"
+        - name: RUNNER_NAME
+          value: "leedonggyu-runner"
+        - name: RUNNER_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: github-runner-secret
+              key: token
+        - name: RUNNER_ORG
+          value: "zkfmapf123"
+        - name: REPO_URL
+          value: "https://github.com/zkfmapf123/k8s-github-action"
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1"
+            memory: "2Gi"

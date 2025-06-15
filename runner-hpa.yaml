@@ -10,16 +10,17 @@ spec:
     name: github-runner
   minReplicas: 1
   maxReplicas: 10
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
   metrics:
   - type: Resource
     resource:
       name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 10
-  - type: Resource
-    resource:
-      name: memory
       target:
         type: Utilization
         averageUtilization: 50

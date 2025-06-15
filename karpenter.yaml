@@ -22,7 +22,7 @@ spec:
 
   limits:
     resources:
-      cpu: "20"
+      cpu: "30"
       memory: "50Gi"
 
   provider:
