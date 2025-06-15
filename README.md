@@ -43,3 +43,24 @@ kubectl create secret generic github-runner-secret \
 ![4](./public/4.png)
 ![5](./public/5.png)
 
+## Trouble Shooting...
+
+### EC2 Node Issue
+
+- Node Status가 NotReady
+- EC2 Instance Profile이 없어서 -> Kubelet이 EKS Control Plane에 접근 불가
+- <b>InstanceProfile을 직접 지정</b>
+
+![ts-1](./public/ts-1.png)
+![ts-2](./public/ts-2.png)
+
+```sh
+
+## karpenter log 분석
+kubectl -n karpenter logs deployment/karpenter
+
+## karpenter.yaml
+provider:
+    instanceProfile: eks-karpenter-action-instance-profile
+```
+
