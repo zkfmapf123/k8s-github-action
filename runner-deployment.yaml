@@ -4,7 +4,7 @@ metadata:
   name: github-runner
   namespace: action
 spec:
-  replicas: 1  # 초기 Pod 수를 1로 설정
+  replicas: 3
   selector:
     matchLabels:
       app: github-runner
@@ -12,18 +12,11 @@ spec:
     metadata:
       labels:
         app: github-runner
-        type: karpenter
+        type: karpenter         # pod label에도 type karpenter 붙여도 OK
     spec:
       nodeSelector:
-        type: karpenter
+        type: karpenter          # <--- 여기서 nodeSelector로 필터링
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: type
-                operator: In
-                values: ["karpenter"]
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
@@ -31,7 +24,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - github-runner
+                  - github-runner
             topologyKey: kubernetes.io/hostname
       containers:
       - name: runner

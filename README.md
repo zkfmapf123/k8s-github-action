@@ -64,3 +64,27 @@ provider:
     instanceProfile: eks-karpenter-action-instance-profile
 ```
 
+### EC2 NodePool 없음 (진행 중)
+
+- 6개의 노드가 실패 후 -> karpenter가 nodeclaim을 기준으로 노드를 생성하려고 시도
+
+```sh
+  Warning  FailedScheduling  14s   default-scheduler  0/6 nodes are available: 6 Insufficient cpu. preemption: 0/6 nodes are available: 6 No preemption victims found for incoming pod.
+  Normal   Nominated         13s   karpenter          Pod should schedule on: nodeclaim/default-tn8fg
+```
+
+- k describe nodeclaims.karpenter.sh <node-claim>
+
+![ts-4](./public/ts-4.png)
+
+- nodeClaim 에 구성된 노드가 EKS 클러스터에 <b>join</b> 되지 않았음 (Node not registerd with cluster)
+- nodeClaim으로 구성된 Ec2에 들어가서 보면 아래와 같은 에러가 발생하고 있음
+```sh
+ 1498 csi_plugin.go:887] Failed to contact API server when waiting for CSINode publishing: Unauthorized
+```
+
+
+
+
+
+
