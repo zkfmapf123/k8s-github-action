@@ -14,18 +14,28 @@ spec:
         app: github-runner
         Service: action
     spec:
+      nodeSelector:
+        type: karpenter
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
+              - key: type
+                operator: In
+                values: ["karpenter"]
               - key: Service
                 operator: In
-                values:
-                - action
+                values: ["action"]
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - topologyKey: kubernetes.io/hostname
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - github-runner
+            topologyKey: kubernetes.io/hostname
       containers:
       - name: runner
         image: myoung34/github-runner:latest
